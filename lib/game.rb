@@ -1,6 +1,7 @@
 require_relative './board'
 class Game
     def initialize
+        @names_and_symbols = Hash.new
         @board = Board.new
         @turn_numbers = 0
         user_manuel
@@ -21,34 +22,55 @@ class Game
         puts 'To place a mark on the grid, type the number on  '
         puts 'the space you would like to mark! As shown below.'
         puts "Good luck! \n "
+        puts "Please enter the name of Player #1: "
+        name1 = gets.chomp
+        puts "Please enter the name of Player #2: "
+        name2 = gets.chomp  
+        puts "#{name1} choose: x/o "
+        result = gets.chomp
+        if result.downcase == 'o'
+            @names_and_symbols[:o] = name1
+            @names_and_symbols[:x] = name2
+        else
+            @names_and_symbols[:o] = name2
+            @names_and_symbols[:x] = name1
+        end
+        puts ''
     end
     def turn player
-        puts "Player #{player}'s Turn, choose a tile"
+        puts "#{@names_and_symbols[player]}'s Turn, choose a tile"
         @board.print_board
         input = gets.chomp.to_i
-        while !@board.add(input,player)
+        while !@board.add(input,player.to_s)
             puts "Please enter a valid tile"
             input = gets.chomp.to_i
         end
         @turn_numbers+=1
         if @turn_numbers>4
-            return @board.check(input,player)
+            return @board.check(input,player.to_s)
         else
             return false
         end 
     end
     def game_controller
-        current_player = 'x'
+        current_player = :x
         wins = false
         while true
             if @turn_numbers == 9 || wins
                 if wins
+                    t = (50-(1+@names_and_symbols[current_player].length+7))/2
                     puts "\n"
                     puts '*************************************************'
                     puts '**************** CONGRATULATIONS ****************'
                     puts '*************************************************'
-                    puts "**************** #{current_player} Player Wins! *****************"
-                    puts '*************************************************'
+                    t.times{ print '*'}
+                    print " #{@names_and_symbols[current_player]} Wins! "
+                    if @names_and_symbols[current_player].length % 2 == 0
+                        (t-1).times{ print '*'}
+                    else 
+                        (t).times{ print '*'}
+                    end
+                    puts "\n*************************************************"
                     @board.print_board
                     puts ""
 
@@ -73,9 +95,9 @@ class Game
                 end
             end
             if @turn_numbers%2 == 0
-                current_player = 'x'
+                current_player = :x
             else
-                current_player = 'o'
+                current_player = :o
             end
             wins = turn(current_player)
         end
