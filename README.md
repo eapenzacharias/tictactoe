@@ -56,7 +56,7 @@ Will result in:
 If the tile you choose is not available, or if your input is not valid you will be asked to enter a valid tile.
 
 `$ x`
-`Please enter a valid tile`
+~~~~Please enter a valid tile~~~~
 
 The game will not countinue until you choose a valid tile.
 
