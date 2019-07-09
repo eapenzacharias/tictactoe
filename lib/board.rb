@@ -86,14 +86,3 @@ class Board
   end
   private :check_row, :check_col ,:check_d
 end
-ab = Board.new
-
-ab.print_board
-ab.add(5,'x')
-ab.add(1,'x')
-ab.add(9,'o')
-ab.add(3,'o')
-ab.add(8,'o')
-ab.add(7,'o')
-ab.print_board
-puts ab.check( 7, "o")
