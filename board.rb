@@ -1,8 +1,25 @@
 class Board
-  @matrix = [[3],[3],[3]]
-  
+  @matrix = Array.new
+  def initialize
+    @matrix = [[1,2,3],[4,5,6],[7,8,9]]
+  end
+  def add tile, value
+    return false unless tile>0 && tile<10 
+    row = tile/3
+    col = (tile % 3)-1
+    if tile % 3 == 0
+      col = 2
+      row -= 1
+    end
+    if @matrix[row][col] != 'x' && @matrix[row][col] != 'o'
+      @matrix[row][col] = value
+    else
+      return false
+    end
+  end
+
   def clear
-    @matrix = [[3],[3],[3]]
+    @matrix = [[1,2,3],[4,5,6],[7,8,9]]
   end
 
   def check_row tile,value
@@ -17,8 +34,8 @@ class Board
   end
   
   def check_col tile,value
-    col = (c%3)-1
-    if c%3 == 0
+    col = (tile%3)-1
+    if tile%3 == 0
       col = 2
     end
     for i in (0...3)
@@ -39,9 +56,9 @@ class Board
   
   def check tile,value
     wins = false
-    row = c/3
-    col = (c % 3)-1
-    if c % 3 == 0
+    row = tile/3
+    col = (tile % 3)-1
+    if tile % 3 == 0
       col = 2
       row -= 1
     end
@@ -55,6 +72,28 @@ class Board
     end
     return wins
   end
-end
 
-puts "Row: #{row} Col: #{col} "
+  def print_board
+
+    puts '-------------'
+    puts "| #{@matrix[0][0]} | #{@matrix[0][1]} | #{@matrix[0][2]} |"
+    puts '|---+---+---|'
+    puts "| #{@matrix[1][0]} | #{@matrix[1][1]} | #{@matrix[1][2]} |"
+    puts '|---+---+---|'
+    puts "| #{@matrix[2][0]} | #{@matrix[2][1]} | #{@matrix[2][2]} |"
+    puts '-------------'
+    puts ""
+  end
+  private :check_row, :check_col ,:check_d
+end
+ab = Board.new
+
+ab.print_board
+ab.add(5,'x')
+ab.add(1,'x')
+ab.add(9,'o')
+ab.add(3,'o')
+ab.add(8,'o')
+ab.add(7,'o')
+ab.print_board
+puts ab.check( 7, "o")
