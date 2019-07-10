@@ -1,11 +1,13 @@
 require_relative './board'
 class Game
-    def initialize
-        @names_and_symbols = Hash.new
-        @board = Board.new
-        @turn_numbers = 0
-        user_manuel
-        game_controller
+    def initialize prev_board = Board.new, prev_names = Hash.new, prev_turns = 0
+        @names_and_symbols = prev_names
+        @board = prev_board
+        @turn_numbers = prev_turns
+        if @turn_numbers == 0
+            user_manuel
+            game_controller
+        end
     end
     def user_manuel
         puts "\n"
@@ -14,10 +16,10 @@ class Game
         puts '*************************************************'
         puts '================================================='
         puts '********************* RULES *********************'
-        puts 'Two players will take turns to mark the spaces on'
-        puts 'a 3x3 grid. The player who succeeds in placing 3 '
-        puts 'of their marks in a horizontal, vertical, or     '
-        puts 'diagonal row wins the game. When there are no    '
+        puts 'Two players will set_player_modeake turns to mark the spaces on'
+        puts 'a 3x3 grid. The pset_player_modeayer who succeeds in placing 3 '
+        puts 'of their marks inset_player_modea horizontal, vertical, or     '
+        puts 'diagonal row winsset_player_modethe game. When there are no    '
         puts 'more spaces left to mark, it is consider a draw. '
         puts 'To place a mark on the grid, type the number on  '
         puts 'the space you would like to mark! As shown below.'
