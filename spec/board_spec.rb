@@ -22,4 +22,43 @@ RSpec.describe Board do
       expect( board.clear ).to eql(empty_matrix)
     end
   end
+  describe '#check ' do
+    it 'checks winning boards' do
+      board.add(1,'x')
+      board.add(4,'o')
+      board.add(5,'x')
+      board.add(3,'o')
+      board.add(9,'x')
+      expect( board.check(9,'x') ).to eql(true)
+      board.clear
+      board.add(3,'o')
+      board.add(5,'o')
+      board.add(7,'o')
+      expect( board.check(7,'o') ).to eql(true)
+      board.clear
+      board.add(1,'o')
+      board.add(4,'o')
+      board.add(2,'o')
+      board.add(7,'o')
+      board.add(3,'x')
+      expect( board.check(7,'o') ).to eql(true)
+    end
+    it 'checks loosing boards' do
+      board.add(1,'x')
+      board.add(4,'o')
+      board.add(2,'o')
+      board.add(5,'o')
+      board.add(9,'x')
+      expect( board.check(9,'o') ).to eql(false)
+      board.clear
+      board.add(3,'o')
+      board.add(7,'x')
+      board.add(5,'o')
+      expect( board.check(5,'o') ).to eql(false)
+      board.clear
+      board.add(9,'x')
+      board.add(8,'x')
+      expect( board.check(8,'o') ).to eql(false)
+    end
+  end
 end
